@@ -1,4 +1,5 @@
-#include <sys/time.h>
+// #include <sys/time.h>
+#include "wtime.h"
 
 #ifndef _COMMON_H
 #define _COMMON_H
