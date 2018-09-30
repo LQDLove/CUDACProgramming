@@ -1,6 +1,12 @@
-#include "../common/common.h"
+//#include "../common/common.h"
 #include <cuda_runtime.h>
 #include <stdio.h>
+#include <math.h>
+#include <time.h>
+#include <stdlib.h>
+#include <cuda_device_runtime_api.h>
+#include <common_functions.h>
+#include <device_launch_parameters.h>
 
 /*
  * This example helps to visualize the relationship between thread/block IDs and
@@ -9,6 +15,24 @@
  * thread, the calculated offset into input data, and the input data at that
  * offset.
  */
+
+#define CHECK(call)   \
+{\
+	const cudaError_t error = call; \
+	if (error != cudaSuccess)\
+	{ \
+		printf("Error: %s:%d, ", __FILE__, __LINE__); \
+		printf("code:%d, reason: %s\n", error, cudaGetErrorString(error)); \
+		exit(1); \
+	}\
+}
+
+void initialInt(int *ip,int size){
+    for(int i=0;i<size;i++){
+        ip[i]=i;
+    }
+}
+
 
 void printMatrix(int *C, const int nx, const int ny)
 {
